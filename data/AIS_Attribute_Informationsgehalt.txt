@@ -21,7 +21,7 @@ Zeile	Attribute	Bemerkung
 
 20	SOG			Y - Geschwindigkeit (Speed over Ground)
 21	COG			Y - Kurs (course over ground)
-22	TH			?????????????
+22	TH			? - Heading / Richtung der Nase (siehe https://en.wikipedia.org/wiki/Course_(navigation) )
 
 23	Destination	? - Endgültiges Ziel (Hamburg evtl nur Zwischenstop)
 

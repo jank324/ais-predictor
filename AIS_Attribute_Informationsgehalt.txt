@@ -1,0 +1,24 @@
+Zeile	Attribute	Bemerkung
+
+2	TripID		benötigt, um Einträge Schiffen zuweisen zu können
+3	MMSI 		unnötig, da nur Rufnummer der Schiffe https://de.wikipedia.org/wiki/Maritime_Mobile_Service_Identity
+4-	StartLat
+	bis		behalten, aber versuchen zu verarbeiten/Dauer direkt ausrechnen, lat und long als koordinaten umzuwandeln
+-9	EndTime
+10	StartPort	unnötig, immer Rotterdam?!?
+11	EndPort		erstmal behalten, da später zusammenfügen mit Hamburg/Felixstowe?!?
+12	ID		unnötig, kein Informationsgewinn, Anscheinend ID für den Eintrag
+13	time date	benötigt, im Zusammenhang mit TripID genaue Fahrtroute ermittelbar
+14	shiptype 	unnötig, da alles cargo laut https://help.marinetraffic.com/hc/en-us/articles/205579997-What-is-the-significance-of-the-AIS-Shiptype-number- 
+15-	Length	
+	bis		unsicher
+-17	Draught
+18	Latitude	unsicher, wofür überhaupt
+19	Longitude	selbiges
+20	SOG		benötigt, Geschwindigkeit, steht für Speed over Ground
+21	COG		benötigt, Kurs, course over ground
+22	TH		Keine Ahnung wofür das steht
+23	Destination	unnötig, muss uns jetzt nicht interessieren, ob er nach Hamburg/Felixstowe noch weiter fährt, oder?
+24	Name		unnötig?, Name und manchmal Logistikunternehmen des Schiffes, es sei denn das Schiff fährt immer dieselbe Route mit ungefähr der selben Zeit
+25	Callsign	selber informationsgehalt wie Name, eigenständige Kennung
+26	AisSourcen	Keine Ahnung, wahrscheinlich woher die Daten stammen, Satelite oder ähnliches https://help.marinetraffic.com/hc/en-us/articles/226409747-Which-are-the-possible-sources-for-positional-data-

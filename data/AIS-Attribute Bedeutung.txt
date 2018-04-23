@@ -1,9 +1,9 @@
 Zeile	Attribute	Bemerkung
 
-2	TripID		Y - ID für Trip
+2	TripID		? - ID für Trip
 3	MMSI 		N - eindeutige Identifikation (Funknummer) eines Schiffes
 
-4-6	Start 		Y - Startkoordinaten und -Zeit
+4-6	Start 		? - Startkoordinaten und -Zeit
 7-9	End			Y - Endkoordinaten und -zeit
 10	StartPort	? - immer Rotterdam?!?
 11	EndPort		? - erstmal behalten, da später zusammenfügen mit Hamburg/Felixstowe?!?
@@ -23,7 +23,7 @@ Zeile	Attribute	Bemerkung
 21	COG			Y - Kurs (course over ground)
 22	TH			? - Heading / Richtung der Nase (siehe https://en.wikipedia.org/wiki/Course_(navigation) )
 
-23	Destination	? - Endgültiges Ziel (Hamburg evtl nur Zwischenstop)
+23	Destination	N - Endgültiges Ziel (Hamburg evtl nur Zwischenstop)
 
 24	Name		N - Name des Schiffes (manchmal mit Logistikunternehmen)
 25	Callsign	N - eigenständige Kennung des Schiffes

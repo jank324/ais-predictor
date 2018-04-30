@@ -1,9 +1,11 @@
 import pandas
 
-dataset = pandas.read_csv("PY10 rotterdam_hamburg.csv")
+dataset = pandas.read_csv("PY11 rotterdam_hamburg - times to UNIX time.csv")
 
-dataset["StartTime"] = dataset["StartTime"] / 1000
-dataset["EndTime"] = dataset["EndTime"] / 1000
-dataset["time"] = dataset["time"] / 1000
+import matplotlib.pyplot as plt
 
-dataset.to_csv("PY11 rotterdam_hamburg - times to UNIX time.csv")
+xs = dataset["Longitude"]
+ys = dataset["Latitude"]
+
+plt.plot(xs, ys, "x")
+plt.show()

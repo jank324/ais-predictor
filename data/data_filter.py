@@ -1,22 +1,37 @@
 from scipy.io import arff
 
-data, meta = arff.loadarff("TRIPID 360933 Data direkt ROT-HAM.arff")
+data, meta = arff.loadarff("PY09 rotterdam_hamburg - Dates Numeric.arff")
 print "Data finished loading."
 
-tripids = data["TripID"]
-longitudes = data["Longitude"]
-latitudes = data["Latitude"]
+print data["time"][0:10]
 
-filteredLong = []
-filteredlat = []
-l = len(tripids)
-for i in range(0, l):
-    if tripids[i] == 360933:
-        filteredLong.append(longitudes[i])
-        filteredlat.append(latitudes[i])
+times = data["time"]
+for i in range(0, len(times)):
+    t = times[i]
+    times[i] = t / 1000
+data["time"] = times
 
-import matplotlib.pyplot as plt
+start_times = data["StartTime"]
+for i in range(0, len(start_times)):
+    t = start_times[i]
+    start_times[i] = t / 1000
+data["StartTime"] = start_times
 
-plt.plot(filteredLong, filteredlat, "ro")
-plt.axis([2.89, 10.0, 51.68, 54.54])
-plt.show()
+end_times = data["EndTime"]
+for i in range(0, len(end_times)):
+    t = end_times[i]
+    end_times[i] = t / 1000
+data["EndTime"] = end_times
+
+print "---------------------------------------------"
+print data["time"][0:10]
+
+#tripids = data["TripID"]
+#longitudes = data["Longitude"]
+#latitudes = data["Latitude"]
+
+#import matplotlib.pyplot as plt
+#
+#plt.plot(longitudes, latitudes, "ro")
+#plt.axis([2.89, 10.0, 51.68, 54.54])
+#plt.show()

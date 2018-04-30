@@ -1,9 +1,9 @@
-from scipy.io import arff
 import pandas
 
-raw_data = arff.loadarff("PY09 rotterdam_hamburg - Dates Numeric.arff")
-print "Data finished loading."
+dataset = pandas.read_csv("PY10 rotterdam_hamburg.csv")
 
-dataset = pandas.DataFrame(raw_data[0])
+dataset["StartTime"] = dataset["StartTime"] / 1000
+dataset["EndTime"] = dataset["EndTime"] / 1000
+dataset["time"] = dataset["time"] / 1000
 
-dataset.to_csv("rot-ham_pandas_test.csv")
+dataset.to_csv("PY11 rotterdam_hamburg - times to UNIX time.csv")

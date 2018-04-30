@@ -6,4 +6,4 @@ print "Data finished loading."
 
 dataset = pandas.DataFrame(raw_data[0])
 
-print dataset.head(20)
+dataset.to_csv("rot-ham_pandas_test.csv")

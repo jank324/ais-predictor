@@ -1,5 +1,6 @@
 from scipy.io import arff
 
-data = arff.loadarff("B13a rotterdam_hamburg - ursula teils aussortiert.arff")
+data, meta = arff.loadarff("TRIPID 360933 Data direkt ROT-HAM.arff")
+print "Data finished loading."
 
-print data.count
+print data["time"][0:5]

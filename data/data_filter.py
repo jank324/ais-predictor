@@ -26,12 +26,26 @@ data["EndTime"] = end_times
 print "---------------------------------------------"
 print data["time"][0:10]
 
-#tripids = data["TripID"]
-#longitudes = data["Longitude"]
-#latitudes = data["Latitude"]
+tripids = data["TripID"]
+longitudes = data["Longitude"]
+latitudes = data["Latitude"]
 
-#import matplotlib.pyplot as plt
-#
-#plt.plot(longitudes, latitudes, "ro")
-#plt.axis([2.89, 10.0, 51.68, 54.54])
-#plt.show()
+import matplotlib.pyplot as plt
+
+plt.plot(longitudes, latitudes, "ro")
+plt.axis([2.89, 10.0, 51.68, 54.54])
+plt.show()
+
+"""
+import h5py
+
+hf = h5py.File("h5_data_test.h5", "w")
+hf.create_dataset("ais_rotham_h5_test", data=data)
+hf.close()
+
+hf = h5py.File("h5_data_test.h5", "r")
+print hf.keys()
+data = hf.get("ais_rotham_h5_test")
+
+print data
+"""

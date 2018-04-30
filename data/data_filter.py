@@ -1,8 +1,5 @@
-from sklearn import tree
+from scipy.io import arff
 
-features = [[140, 1], [130, 1], [150, 0], [170, 0]]
-labels = [0, 0, 1, 1]
+data = arff.loadarff("B13a rotterdam_hamburg - ursula teils aussortiert.arff")
 
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(features, labels)
-print clf.predict([[150, 0]])
+print data.count

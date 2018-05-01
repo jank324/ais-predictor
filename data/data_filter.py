@@ -26,5 +26,5 @@ dataset = pandas.read_csv("PY12 rot-ham - spalten bereinigt.csv")
 
 xs = dataset["Longitude"]
 ys = dataset["Latitude"]
-plt.scatter(xs, ys, s=5, c="red", alpha=0.5,transform=ccrs.Geodetic())
+plt.scatter(xs, ys, s=1, c="red", alpha=0.5,transform=ccrs.Geodetic())
 plt.show()

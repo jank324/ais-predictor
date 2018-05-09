@@ -2,6 +2,7 @@
 /weka-3-8-2
 /weka-3-8-2-oracle-jvm.app
 /Task 1.pdf
+/data/.ipynb_checkpoints
 
 *.arff
 *.csv

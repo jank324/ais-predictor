@@ -6,3 +6,5 @@
 
 *.arff
 *.csv
+
+*.pyc

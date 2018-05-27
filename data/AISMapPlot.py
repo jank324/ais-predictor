@@ -12,6 +12,22 @@ VorRott = {'Latitude': 52.43, 'Longitude': 3.43}
 Ecke = {'Latitude': 53.43, 'Longitude': 4.77}
 VorElbe = {'Latitude': 53.99, 'Longitude': 8.17}
 
+dis1 = 142.9 #vorRott bis Ecke
+dis2 = 232.2 #ecke bis vorElbe
+dis3 = 130.2 #vorElbe bis Hamburg
+
+
+#distanz abgesteckte Strecke
+#muss Hamburg und dis3 nochmal mit unserem definierten Ende austauschen/ auf Jans Whiteboard
+def dist_to_end(obj) :
+    if obj.Latitude < 52.43 :
+        return vincenty(obj.Cur_Pos, (52.43, 3.43)).km + dis1 + dis2 + dis3
+    elif obj.Longitude < 4.77 :
+        return vincenty(obj.Cur_Pos, (53.43, 4.77)).km + dis2 + dis3
+    elif obj.Longitude < 8.17 :
+        return vincenty(obj.Cur_Pos, (53.99, 8.17)).km +dis3
+    elif obj.Longitude < 10.02 :
+        return vincenty(obj.Cur_Pos, (53.57, 10.02)).km
 
 # Plot a Google Maps map
 def plot_google_map(extent, size = (13, 13)) :

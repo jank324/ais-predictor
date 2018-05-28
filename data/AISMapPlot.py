@@ -9,28 +9,16 @@ import cartopy.io.img_tiles as cimgt
 
 
 # Constants for different places we define
-Hamburg = {'Latitude': 53.55, 'Longitude': 9.81}
-Rotterdam = {'Latitude': 51.9225, 'Longitude': 4.47917}
-VorRott = {'Latitude': 52.43, 'Longitude': 3.43}
-Ecke = {'Latitude': 53.43, 'Longitude': 4.77}
-VorElbe = {'Latitude': 53.99, 'Longitude': 8.17}
-InElbe ={'Latitude' :53.86, 'Longitude' : 9.29}
+pos_ham = {'Latitude': 53.55, 'Longitude': 9.81}
+pos_rot = {'Latitude': 51.92, 'Longitude': 4.48}
+pos_off_rot = {'Latitude': 52.43, 'Longitude': 3.43}
+pos_rot_ham_corner = {'Latitude': 53.43, 'Longitude': 4.77}
+pos_off_elb = {'Latitude': 53.99, 'Longitude': 8.17}
+pos_in_elb = {'Latitude' : 53.86, 'Longitude': 9.29}
 
-dis1 = 142.9 #vorRott bis Ecke
-dis2 = 232.2 #ecke bis vorElbe
-dis3 = 75.4 #vorElbe bis InElbe
-dis4 = 48.1  #InElbe bis Hamburg
 
-#distanz abgesteckte Strecke
-def dist_to_end(obj) :
-    if obj.Latitude < 52.43 :
-        return vincenty(obj.Cur_Pos, (52.43, 3.43)).km + dis1 + dis2 + dis3 +dis4
-    elif obj.Longitude < 4.77 :
-        return vincenty(obj.Cur_Pos, (53.43, 4.77)).km + dis2 + dis3 +dis4
-    elif obj.Longitude < 8.17 :
-        return vincenty(obj.Cur_Pos, (53.99, 8.17)).km +dis3 + dis4
-    elif obj.Longitude < 9.81 :
-        return vincenty(obj.Cur_Pos, (53.55, 9.81)).km
+# ----- FUNKTIONEN ZUM PLOTTEN -----
+
 
 # Plot a Google Maps map
 def plot_google_map(extent, size = (13, 13)) :
@@ -115,12 +103,17 @@ def col_plot_to_map(size, longitude, latitude, col) :
     plt.colorbar()
 
 
+# ----- FUNKTIONEN ZUR DISTANZBERECHNUNG -----
+
+
+from math import sin, cos, sqrt, atan2, radians
 from geopy.distance import vincenty
+
+
 def pandasVincenty(row) :
     return vincenty(row.Cur_Pos, row.End_Pos).km 
 
 
-from math import sin, cos, sqrt, atan2, radians
 def dist(a_lat, a_long, b_lat, b_long) :
     R = 6373.0
     
@@ -138,6 +131,7 @@ def dist(a_lat, a_long, b_lat, b_long) :
     distance = R * c
     return distance
 
+
 def dist_replace_vincenty(row) :
     R = 6373.0
     
@@ -154,3 +148,20 @@ def dist_replace_vincenty(row) :
 
     distance = R * c
     return distance
+
+
+#distanz abgesteckte Strecke
+def dist_to_end(obj) :
+    dist_1 = 142.9 # pos_off_rot bis pos_rot_ham_corner
+    dist_2 = 232.2 # pos_rot_ham_corner bis pos_off_elb
+    dist_3 = 75.4 # pos_off_elb bis pos_in_elb
+    dist_4 = 48.1  # pos_in_elb bis pos_ham
+
+    if obj.Latitude < 52.43 :
+        return vincenty(obj.Cur_Pos, (52.43, 3.43)).km + dist_1 + dist_2 + dist_3 + dist_4
+    elif obj.Longitude < 4.77 :
+        return vincenty(obj.Cur_Pos, (53.43, 4.77)).km + dist_2 + dist_3 + dist_4
+    elif obj.Longitude < 8.17 :
+        return vincenty(obj.Cur_Pos, (53.99, 8.17)).km + dist_3 + dist_4
+    elif obj.Longitude < 9.81 :
+        return vincenty(obj.Cur_Pos, (53.55, 9.81)).km

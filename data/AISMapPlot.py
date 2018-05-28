@@ -1,3 +1,6 @@
+import pandas as pd
+import numpy as np
+
 import matplotlib.pyplot as plt
 
 import cartopy.crs as ccrs
@@ -22,7 +25,7 @@ def plot_google_map(extent, size = (13, 13)) :
     ax = plt.axes(projection = img.crs)
     ax.set_extent(extent)
     
-    ax.add_image(img, 7, interpolation = 'bicubic')
+    ax.add_image(img, 9, interpolation = 'bicubic')     # should be 7
 
 
 # Plot an OpenStreetMap map
@@ -67,6 +70,22 @@ def plot_to_map(size, longitude, latitude) :
     plt.scatter(x = longitude, y = latitude , transform = ccrs.PlateCarree(), s = 1)
 
 
+def plot_trips(data, colour_col = None) :
+    copy = data.loc[:, ('TripID', 'time', 'Latitude', 'Longitude', colour_col)]
+    copy.set_index(['TripID', 'time'], inplace = True)
+
+    min_lat = copy['Latitude'].min() - 0.5
+    max_lat = copy['Latitude'].max() + 0.5
+    min_long = copy['Longitude'].min() - 0.5
+    max_long = copy['Longitude'].max() + 0.5
+
+    plot_carto_map((min_long, max_long, min_lat, max_lat), size = (13, 13))
+
+    for trip_id in copy.index.get_level_values(0).unique().sort_values() :
+        trip_data = copy.loc[trip_id, :]
+        plt.plot(x = trip_data['Longitude'], y = trip_data['Latitude'], color = trip_data[colour_col], cmap = 'autumn', transform =     ccrs.PlateCarree())
+
+
 # Creates a scatter plot with colour being another dimension
 def col_plot_to_map(size, longitude, latitude, col) :
     min_long = longitude.min() - 0.5
@@ -76,12 +95,12 @@ def col_plot_to_map(size, longitude, latitude, col) :
     
     plot_carto_map((min_long, max_long, min_lat, max_lat), size = size)
     
-    plt.scatter(x = longitude, y = latitude, c=col , cmap= 'autumn', transform = ccrs.PlateCarree(), s = 1)
+    plt.scatter(x = longitude, y = latitude, c = col , cmap = 'autumn', transform = ccrs.PlateCarree(), s = 1)
     plt.colorbar()
 
 
 from geopy.distance import vincenty
-def pandasVincenty(row):
+def pandasVincenty(row) :
     return vincenty(row.Cur_Pos, row.End_Pos).km 
 
 

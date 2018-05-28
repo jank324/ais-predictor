@@ -6,28 +6,28 @@ import cartopy.io.img_tiles as cimgt
 
 
 # Constants for different places we define
-Hamburg = {'Latitude': 53.57532, 'Longitude': 10.01534}
+Hamburg = {'Latitude': 53.55, 'Longitude': 9.81}
 Rotterdam = {'Latitude': 51.9225, 'Longitude': 4.47917}
 VorRott = {'Latitude': 52.43, 'Longitude': 3.43}
 Ecke = {'Latitude': 53.43, 'Longitude': 4.77}
 VorElbe = {'Latitude': 53.99, 'Longitude': 8.17}
+InElbe ={'Latitude' :53.86, 'Longitude' : 9.29}
 
 dis1 = 142.9 #vorRott bis Ecke
 dis2 = 232.2 #ecke bis vorElbe
-dis3 = 130.2 #vorElbe bis Hamburg
-
+dis3 = 75.4 #vorElbe bis InElbe
+dis4 = 48.1  #InElbe bis Hamburg
 
 #distanz abgesteckte Strecke
-#muss Hamburg und dis3 nochmal mit unserem definierten Ende austauschen/ auf Jans Whiteboard
 def dist_to_end(obj) :
     if obj.Latitude < 52.43 :
-        return vincenty(obj.Cur_Pos, (52.43, 3.43)).km + dis1 + dis2 + dis3
+        return vincenty(obj.Cur_Pos, (52.43, 3.43)).km + dis1 + dis2 + dis3 +dis4
     elif obj.Longitude < 4.77 :
-        return vincenty(obj.Cur_Pos, (53.43, 4.77)).km + dis2 + dis3
+        return vincenty(obj.Cur_Pos, (53.43, 4.77)).km + dis2 + dis3 +dis4
     elif obj.Longitude < 8.17 :
-        return vincenty(obj.Cur_Pos, (53.99, 8.17)).km +dis3
-    elif obj.Longitude < 10.02 :
-        return vincenty(obj.Cur_Pos, (53.57, 10.02)).km
+        return vincenty(obj.Cur_Pos, (53.99, 8.17)).km +dis3 + dis4
+    elif obj.Longitude < 9.81 :
+        return vincenty(obj.Cur_Pos, (53.55, 9.81)).km
 
 # Plot a Google Maps map
 def plot_google_map(extent, size = (13, 13)) :
@@ -109,6 +109,23 @@ def dist(a_lat, a_long, b_lat, b_long) :
     lon1 = radians(a_long)
     lat2 = radians(b_lat)
     lon2 = radians(b_long)
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+    return distance
+
+def dist_replace_vincenty(row) :
+    R = 6373.0
+    
+    lat1 = radians(row.Latitude)
+    lon1 = radians(row.Longitude)
+    lat2 = radians(row.EndLatitude)
+    lon2 = radians(row.EndLongitude)
 
     dlon = lon2 - lon1
     dlat = lat2 - lat1

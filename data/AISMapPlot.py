@@ -107,14 +107,10 @@ def col_plot_to_map(size, longitude, latitude, col) :
 
 
 from math import sin, cos, sqrt, atan2, radians
-from geopy.distance import vincenty
 
 
-def pandasVincenty(row) :
-    return vincenty(row.Cur_Pos, row.End_Pos).km 
-
-
-def dist(a_lat, a_long, b_lat, b_long) :
+# Bee line distance of two positions
+def beeline_dist(a_lat, a_long, b_lat, b_long) :
     R = 6373.0
     
     lat1 = radians(a_lat)
@@ -132,36 +128,18 @@ def dist(a_lat, a_long, b_lat, b_long) :
     return distance
 
 
-def dist_replace_vincenty(row) :
-    R = 6373.0
-    
-    lat1 = radians(row.Latitude)
-    lon1 = radians(row.Longitude)
-    lat2 = radians(row.EndLatitude)
-    lon2 = radians(row.EndLongitude)
+# Distance to Hamburg along beaconed route (ROT-HAM)
+def route_dist_to_ham(lat, long) :
+    dist_1 = 142.9 # pos_off_rot to pos_rot_ham_corner
+    dist_2 = 232.2 # pos_rot_ham_corner to pos_off_elb
+    dist_3 = 75.4  # pos_off_elb to pos_in_elb
+    dist_4 = 48.1  # pos_in_elb to pos_ham
 
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-    distance = R * c
-    return distance
-
-
-#distanz abgesteckte Strecke
-def dist_to_end(obj) :
-    dist_1 = 142.9 # pos_off_rot bis pos_rot_ham_corner
-    dist_2 = 232.2 # pos_rot_ham_corner bis pos_off_elb
-    dist_3 = 75.4 # pos_off_elb bis pos_in_elb
-    dist_4 = 48.1  # pos_in_elb bis pos_ham
-
-    if obj.Latitude < 52.43 :
-        return vincenty(obj.Cur_Pos, (52.43, 3.43)).km + dist_1 + dist_2 + dist_3 + dist_4
-    elif obj.Longitude < 4.77 :
-        return vincenty(obj.Cur_Pos, (53.43, 4.77)).km + dist_2 + dist_3 + dist_4
-    elif obj.Longitude < 8.17 :
-        return vincenty(obj.Cur_Pos, (53.99, 8.17)).km + dist_3 + dist_4
-    elif obj.Longitude < 9.81 :
-        return vincenty(obj.Cur_Pos, (53.55, 9.81)).km
+    if lat < 52.43 :
+        return beeline_dist(lat, long, pos_off_rot['Latitude'], pos_off_rot['Longitude']) + dist_1 + dist_2 + dist_3 + dist_4
+    elif long < 4.77 :
+        return beeline_dist(lat, long, pos_rot_ham_corner['Latitude'], pos_rot_ham_corner['Longitude']) + dist_2 + dist_3 + dist_4
+    elif long < 8.17 :
+        return beeline_dist(lat, long, pos_off_elb['Latitude'], pos_off_elb['Longitude']) + dist_3 + dist_4
+    elif long < 9.81 :
+        return beeline_dist(lat, long, pos_ham['Latitude'], pos_ham['Longitude'])

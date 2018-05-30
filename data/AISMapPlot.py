@@ -141,5 +141,9 @@ def route_dist_to_ham(lat, long) :
         return beeline_dist(lat, long, pos_rot_ham_corner['Latitude'], pos_rot_ham_corner['Longitude']) + dist_2 + dist_3 + dist_4
     elif long < 8.17 :
         return beeline_dist(lat, long, pos_off_elb['Latitude'], pos_off_elb['Longitude']) + dist_3 + dist_4
+    elif long < 9.29 :
+        return beeline_dist(lat, long, pos_in_elb['Latitude'], pos_in_elb['Longitude']) + dist_4
     elif long < 9.81 :
         return beeline_dist(lat, long, pos_ham['Latitude'], pos_ham['Longitude'])
+    else :
+        return 999.9

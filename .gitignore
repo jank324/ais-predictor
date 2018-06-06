@@ -3,6 +3,7 @@
 /weka-3-8-2-oracle-jvm.app
 /Task 1.pdf
 /data/.ipynb_checkpoints
+/data/ROT-HAM_learners_01min.pkl
 
 *.arff
 *.csv

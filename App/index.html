@@ -8,11 +8,11 @@
     <body>
         Click the button to estimate the vessel's ETT ...
         <input type="text" name="pathfield">
-        <input type="button" id='script' name="scriptbutton" value=" Run Broker " onclick="goPython()">
+        <input type="button" id='script' name="scriptbutton" value=" Run Broker " onclick="runBroker()">
         <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script>
-            function goPython(){
-                $.ajax({ url: "MYSCRIPT.py", context: document.body }).done(function() {
+            function runBroker(){
+                $.ajax({ url: "broker.py", context: document.body }).done(function() {
                     alert('finished python script');;
                 });
             }

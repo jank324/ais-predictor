@@ -8,6 +8,7 @@
 # return entire travel time and route
 
 import numpy as np
+import os
 import pandas as pd
 import sys
 
@@ -16,7 +17,6 @@ learners = ['Latitude', 'Longitude']
 file_path = sys.argv[1]
 print('The file path is \"%s\"' % (file_path))
 
-# Load the data
 names = ['TripID', 'MMSI', 'StartLatitude', 'StartLongitude', 'StartTime', 'EndLatitude', 'EndLongitude', 'EndTime',
          'StartPort', 'EndPort', 'ID', 'time', 'shiptype', 'Length', 'Breadth', 'Draught', 'Latitude', 'Longitude',
          'SOG', 'COG', 'TH', 'Destination', 'Name', 'Callsign', 'AisSourcen']
@@ -33,4 +33,6 @@ df.loc[df['SOG'] > 25.6, 'SOG'] = np.nan
 
 df = df[learners]
 
-print(df)
+for index, row in df.iterrows():
+    print("Broker calling agent ...")
+    os.system("python example_agent.py %f %f" % (row['Latitude'], row['Longitude']))

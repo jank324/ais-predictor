@@ -14,7 +14,6 @@
             function runBroker(){
                 //alert("Vincent der chinesische Nackthund ...")
                 $.ajax({
-                    type: "POST",
                     url: "broker.py"
                 }).done(function(number) {
                     alert("Broker returned " + number);

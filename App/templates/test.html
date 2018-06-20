@@ -1,7 +1,6 @@
 <!doctype html>
 
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
 <title>Upload new File</title>
 <h1>Upload new ARFF file</h1>
 <form method=post enctype=multipart/form-data>
@@ -9,13 +8,7 @@
     <input type=submit value=Upload>
 </form>
 <p>Plotted trip will be returned here:</p>
-<img src = "{{output}}">
+<img src = "{{output}}" alt = "{{output2}}">
 
 
 
-
-<!--<form method="POST">
-    <p>Hier den Broker Pfad angeben</p>
-    <input name="text">
-    <input type="submit">
-</form>-->

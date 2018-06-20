@@ -1,9 +1,7 @@
 import sys
-from PIL import Image
 import numpy as np
-import os
 import pandas as pd
-sys.path.append('../data/AISMapPlot.py')
+sys.path.append('../data/')
 import AISMapPlot as aismap
 import matplotlib.pyplot as plt
 
@@ -28,11 +26,13 @@ def extract_data(file_path):
     aismap.plot_to_map(size = (13, 13), longitude = df['Longitude'], latitude = df['Latitude'])
     picName = './static/pic.jpg'
     plt.savefig(picName)
+    
+    return 1
 
-    return picName
 
 def main(arg):
-    return (extract_data(arg))
+    return extract_data(arg)
+    
 
 
 if __name__ == "__main__":
@@ -40,7 +40,3 @@ if __name__ == "__main__":
 
 
 
-
-#img  = Image.open(arg)
-#    width, height = img.size
-#    print(width)

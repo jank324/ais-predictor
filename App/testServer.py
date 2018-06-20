@@ -17,7 +17,7 @@ def my_form_post():
     name += f.filename
     f.save(name)
     text = './testBroker.py'
-    output = subprocess.check_output([sys.executable, text, name])
+    subprocess.check_output([sys.executable, text, name])
     #file_name = os.path.join(pictures, f.filename)
     output = './static/pic.jpg'
     return render_template("test.html", output = output)

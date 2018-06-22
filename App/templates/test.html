@@ -1,14 +1,75 @@
 <!doctype html>
+<html>
 
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-<title>Upload new File</title>
-<h1>Upload new ARFF file</h1>
-<form method=post enctype=multipart/form-data>
-    <input type=file name=file>
-    <input type=submit value=Upload>
-</form>
-<p>Plotted trip will be returned here:</p>
-<img src = "{{output}}" alt = "{{output2}}">
+<head>
 
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
 
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
+    <style>
+        #wrapper   { display: table; width: 800px; height: 1000px;}
+        #text  { display: table-header-group; }
+        #map { display: table-footer-group; }
+    </style>
+    <title>Upload new File</title>
+</head>
+
+<body>
+    <div id='wrapper'>
+        <div id='text'>
+            <h1>Upload new ARFF file</h1>
+            <form method=post enctype=multipart/form-data>
+                <input type=file name=file>
+                <input type=submit value=Upload>
+            </form>
+            <p>Plotted trip will be returned here:</p>
+            <p>"{{output2}}"</p>
+        </div>
+        <div id='map' style = "width: 800px; height: 800px;">
+                <script>
+                    
+                    theCoords = {
+                        "type": "LineString",
+                        "coordinates": {{geojson}}
+                    };
+                        mapboxgl.accessToken = 'pk.eyJ1IjoidmhhbmtlIiwiYSI6ImNqaXBvb3poYzB5OXAzcG1mdnkwOGdqd2gifQ.3kstKqV75vv8miE3GsJRPQ';
+                        var map = new mapboxgl.Map({
+                            container: 'map',
+                            style: 'mapbox://styles/mapbox/streets-v9',
+                            center: [6, 55],
+                            zoom: 4.5
+                        });
+                        
+                        map.on('load', function () {
+                            map.addSource("route", {
+                                "type": "geojson",
+                                "data": {
+                                    "type": "Feature",
+                                    "properties": {},
+                                    "geometry": theCoords
+                                }
+                            });
+
+                            map.addLayer({
+                                "id": "route",
+                                "type": "line",
+                                "source": "route",
+                                "layout": {
+                                    "line-join": "round",
+                                    "line-cap": "round"
+                                },
+                                "paint": {
+                                    "line-color": "#888",
+                                    "line-width": 3
+                                }
+                            });
+                        });
+                        </script>
+                        
+        </div>
+    </div>
+</body>
+
+</html>

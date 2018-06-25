@@ -1,6 +1,7 @@
+import sys
+sys.path.append('/home/deployer/anaconda3/lib/python2.7/site-packages')
 from flask import Flask, request, render_template
 import subprocess
-import sys
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import HTTPException, BadRequestKeyError
 import os

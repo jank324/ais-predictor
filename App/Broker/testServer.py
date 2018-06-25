@@ -29,4 +29,4 @@ def my_form_post():
         errorMSG = 'ERROR:Bitte eine arff Datei auswaehlen'
         return render_template("test.html", output2 = errorMSG)
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0',debug=True)
+    app.run(host = '0.0.0.0', port = 80, debug = True)

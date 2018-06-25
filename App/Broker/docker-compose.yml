@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  broker:
+    build: ./
+    ports:
+      - 5000:80

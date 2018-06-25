@@ -3,8 +3,6 @@ import numpy as np
 import pandas as pd
 #sys.path.append('../data/')
 #import AISMapPlot as aismap
-import matplotlib.pyplot as plt
-from geojson import LineString,dumps
 
 learners = ['Latitude', 'Longitude']
 

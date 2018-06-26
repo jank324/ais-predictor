@@ -2,17 +2,15 @@ from flask import Flask, flash, request, render_template
 import os
 import subprocess
 import sys
-from werkzeug.utils import secure_filename
 
-app = Flask(__name__, static_url_path = '/static')
+app = Flask(__name__, static_url_path='/static')
 
 @app.route('/')
 def main_page():
     return render_template('test.html')
 
-@app.route('/uploadtrip', methods = ['POST'])
+@app.route('/uploadtrip', methods=['POST'])
 def upload_trip():
-    print('YEEEY')
     file = request.files['tripfile']
     file.save('uploads/trip.arff')    # TODO: Check if .arff
     return 'File saved!'
@@ -26,4 +24,4 @@ def upload_file():
         return render_template("test.html",geojson = output, output2 = '')'''
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', port = 80, debug = True)
+    app.run(host='0.0.0.0', port=80, debug=True)

@@ -6,8 +6,8 @@ import sys
 app = Flask(__name__, static_url_path='/static')
 
 @app.route('/')
-def main_page():
-    return render_template('test.html')
+def show_main_page():
+    return render_template('main_page.html')
 
 @app.route('/uploadtrip', methods=['POST'])
 def upload_trip():

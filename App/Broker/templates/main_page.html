@@ -1,33 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <link type='text/css' rel='stylesheet' href='static/style.css'>
+        <link rel='shortcut icon' href='{{ url_for('static', filename='favicon.ico') }}'>
+
+        <script src='http://code.jquery.com/jquery-3.3.1.min.js' integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=' crossorigin='anonymous'></script>
+
         <script src='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
         <link href='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
-        <link rel='shortcut icon' href='{{ url_for('static', filename='favicon.ico') }}'>
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-            }
-
-            #wrapper {
-                margin: 0;
-                padding: 0;
-            }
-
-            #text {
-                top: 0;
-                height: 30%;
-            }
-
-            #map {
-                position: absolute;
-                width: 100%;
-                height: 70%;
-                bottom: 0;
-            }
-        </style>
+        
+        <script src='static/script.js'></script>
         <title>Upload new File</title>
     </head>
     <body>
@@ -36,37 +18,12 @@
                 <h1>Upload new ARFF file</h1>
                 <form id='uploadFile' method='post' enctype='multipart/form-data'>
                     <input name='tripfile' type='file'>
-                    <button id='uploadFileButton' type='button' onclick='uploadFile()'>Upload</button>
-                    <script>
-                        function uploadFile() {
-                            var form_data = new FormData($('#uploadFile')[0]);
-                            $.ajax({
-                                type: 'POST',
-                                url: '/uploadtrip',
-                                data: form_data,
-                                contentType: false,
-                                cache: false,
-                                processData: false,
-                                success: function(data) {
-                                    console.log('Success!');
-                                },
-                            });
-                        }
-                    </script>
+                    <button id='uploadFileButton' type='button'>Upload</button>
                 </form>
                 <p>Plotted trip will be returned here:</p>
                 <p>{{output2}}</p>
             </div>
             <div id='map'></div>
-            <script>
-                mapboxgl.accessToken = 'pk.eyJ1IjoidmhhbmtlIiwiYSI6ImNqaXBvb3poYzB5OXAzcG1mdnkwOGdqd2gifQ.3kstKqV75vv8miE3GsJRPQ';
-                var map = new mapboxgl.Map({
-                    container: 'map',
-                    style: 'mapbox://styles/mapbox/streets-v9',
-                    center: [6.0, 53.0],
-                    zoom: 4.5
-                })
-            </script>
         </div>
     </body>
 </html>

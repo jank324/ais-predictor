@@ -1,75 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+    <head>
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+        <link rel='shortcut icon' href='{{ url_for('static', filename='favicon.ico') }}'>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
 
-<head>
+            #wrapper {
+                margin: 0;
+                padding: 0;
+            }
 
-    <script src='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+            #text {
+                top: 0;
+                height: 30%;
+            }
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
-    <style>
-        #wrapper   { display: table; width: 800px; height: 1000px;}
-        #text  { display: table-header-group}
-        #map { display: table-footer-group}
-    </style>
-    <title>Upload new File</title>
-</head>
-
-<body>
-    <div id='wrapper' style="padding: 0; height:100%">
-        <div id='text'>
-            <h1>Upload new ARFF file</h1>
-            <form method=post enctype=multipart/form-data>
-                <input type=file name=file>
-                <input type=submit value=Upload>
-            </form>
-            <p>Plotted trip will be returned here:</p>
-            <p>{{output2}}</p>
-        </div>
-        <div id='map' style = "width: 800px; height: 70%;">
-                <script>
-                    
-                    theCoords = {
-                        "type": "LineString",
-                        "coordinates": {{geojson}}
-                    };
-                        mapboxgl.accessToken = 'pk.eyJ1IjoidmhhbmtlIiwiYSI6ImNqaXBvb3poYzB5OXAzcG1mdnkwOGdqd2gifQ.3kstKqV75vv8miE3GsJRPQ';
-                        var map = new mapboxgl.Map({
-                            container: 'map',
-                            style: 'mapbox://styles/mapbox/streets-v9',
-                            center: [6, 53],
-                            zoom: 4.5
-                        });
-                        
-                        map.on('load', function () {
-                            map.addSource("route", {
-                                "type": "geojson",
-                                "data": {
-                                    "type": "Feature",
-                                    "properties": {},
-                                    "geometry": theCoords
-                                }
-                            });
-
-                            map.addLayer({
-                                "id": "route",
-                                "type": "line",
-                                "source": "route",
-                                "layout": {
-                                    "line-join": "round",
-                                    "line-cap": "round"
+            #map {
+                position: absolute;
+                width: 100%;
+                height: 70%;
+                bottom: 0;
+            }
+        </style>
+        <title>Upload new File</title>
+    </head>
+    <body>
+        <div id='wrapper'>
+            <div id='text'>
+                <h1>Upload new ARFF file</h1>
+                <form id='uploadFile' method='post' enctype='multipart/form-data'>
+                    <input name='tripfile' type='file'>
+                    <button id='uploadFileButton' type='button' onclick='uploadFile()'>Upload</button>
+                    <script>
+                        function uploadFile() {
+                            var form_data = new FormData($('#uploadFile')[0]);
+                            $.ajax({
+                                type: 'POST',
+                                url: '/uploadtrip',
+                                data: form_data,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                success: function(data) {
+                                    console.log('Success!');
                                 },
-                                "paint": {
-                                    "line-color": "#888",
-                                    "line-width": 3
-                                }
                             });
-                        });
-                        </script>
-                        
+                        }
+                    </script>
+                </form>
+                <p>Plotted trip will be returned here:</p>
+                <p>{{output2}}</p>
+            </div>
+            <div id='map'></div>
+            <script>
+                mapboxgl.accessToken = 'pk.eyJ1IjoidmhhbmtlIiwiYSI6ImNqaXBvb3poYzB5OXAzcG1mdnkwOGdqd2gifQ.3kstKqV75vv8miE3GsJRPQ';
+                var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/mapbox/streets-v9',
+                    center: [6.0, 53.0],
+                    zoom: 4.5
+                })
+            </script>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

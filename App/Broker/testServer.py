@@ -1,32 +1,29 @@
-import sys
-sys.path.append('/home/deployer/anaconda3/lib/python2.7/site-packages')
-from flask import Flask, request, render_template
-import subprocess
-from werkzeug.utils import secure_filename
-from werkzeug.exceptions import HTTPException, BadRequestKeyError
+from flask import Flask, flash, request, render_template
 import os
+import subprocess
+import sys
+from werkzeug.utils import secure_filename
 
-app = Flask(__name__, static_url_path='/static')
-
+app = Flask(__name__, static_url_path = '/static')
 
 @app.route('/')
-def my_form():
+def main_page():
     return render_template('test.html')
 
-@app.route('/', methods=['GET', 'POST'])
-def my_form_post():
-    try:
+@app.route('/uploadtrip', methods = ['POST'])
+def upload_trip():
+    print('YEEEY')
+    file = request.files['tripfile']
+    file.save('uploads/trip.arff')    # TODO: Check if .arff
+    return 'File saved!'
+
+'''@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
         f = request.files['file']
-        name = './static/'
-        name += f.filename
-        f.save(name)
-        text = './testBroker.py'
-        output = subprocess.check_output([sys.executable, text, name])
-        #file_name = os.path.join(pictures, f.filename)
-        #output = './static/pic.jpg'
-        return render_template("test.html",geojson = output, output2 = '')
-    except BadRequestKeyError:
-        errorMSG = 'ERROR:Bitte eine arff Datei auswaehlen'
-        return render_template("test.html", output2 = errorMSG)
+        f.save(UPLOAD_FOLDER + f.filename)
+        output = subprocess.check_output([sys.executable, './testBroker.py', name])
+        return render_template("test.html",geojson = output, output2 = '')'''
+
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', port = 80, debug = True)

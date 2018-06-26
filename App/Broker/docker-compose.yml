@@ -3,5 +3,7 @@ version: '3'
 services:
   broker:
     build: ./
+    volumes:
+      - ./:/usr/src/app
     ports:
       - 5000:80

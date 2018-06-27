@@ -49,9 +49,8 @@ function showTripData(tripJSON) {
     $("#tripTable tr").click(function() {
         $(this).addClass("selected").siblings().removeClass("selected");
 
-        latitude = $(this).find(".latitudeCell").html();
-        longitude = $(this).find(".longitudeCell").html();
-        placeOriginMarker(longitude, latitude);
+        var originPoint = tripJSON[$(this).index()];
+        placeOriginMarker(originPoint.longitude, originPoint.latitude);
     })
 }
 
@@ -60,4 +59,8 @@ function placeOriginMarker(latitude, longitude) {
     originMarker = new mapboxgl.Marker()
         .setLngLat([latitude, longitude])
         .addTo(map);
+}
+
+function plotTrip(tripGeoJSON) {
+
 }

@@ -17,6 +17,9 @@ def load_learners(file):
     df.loc[(df['breadth'] <= 0) | (df['breadth'] > 59), 'breadth'] = np.nan
     df.loc[df['sog'] > 25.6, 'sog'] = np.nan
 
+    df.loc[df['start_port'] == 'ROTTERDAM', 'start_port'] = 'ROT'
+    df.loc[df['end_port'] == 'HAMBURG', 'end_port'] = 'HAM'
+
     df = df.sort_values('time')
     df = df[['time', 'start_port', 'end_port'] + learners]
     

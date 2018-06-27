@@ -12,24 +12,26 @@ $(document).ready(function() {
         zoom: 4.5
     })
 
-    $("#fileUpload").submit(function() {
-        var form_data = new FormData($("#fileUpload")[0]);
-        $.ajax({
-            type: "POST",
-            url: "/trip",
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(response) {
-                tripJSON = JSON.parse(response)
-                showTripData(tripJSON);
-            },
-        });
-        return false;
-    })
+    $("#fileUpload").submit(uploadFile);
 
 })
+
+function uploadFile() {
+    var form_data = new FormData($("#fileUpload")[0]);
+    $.ajax({
+        type: "POST",
+        url: "/trip",
+        data: form_data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(response) {
+            tripJSON = JSON.parse(response)
+            showTripData(tripJSON);
+        },
+    });
+    return false;
+}
 
 function showTripData(tripJSON) {
     html = "<table id=\"tripTable\">";
@@ -51,6 +53,7 @@ function showTripData(tripJSON) {
 
         var originPoint = tripJSON[$(this).index()];
         placeOriginMarker(originPoint.longitude, originPoint.latitude);
+
     })
 }
 
@@ -59,6 +62,10 @@ function placeOriginMarker(latitude, longitude) {
     originMarker = new mapboxgl.Marker()
         .setLngLat([latitude, longitude])
         .addTo(map);
+}
+
+function getPrediction(originPoint) {
+
 }
 
 function plotTrip(tripGeoJSON) {

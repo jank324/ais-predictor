@@ -16,23 +16,19 @@ leave_lon = float(config_file.readline())
 model_position = pickle.load(open('%s/model_position.pkl' % (path), 'rb'))
 model_time = pickle.load(open('%s/model_time.pkl' % (path), 'rb'))
 
-@app.route('/position/<float:lat>-<float:lon>')
+@app.route('/predict/<float:lat>-<float:lon>')
 def predict_position(lat, lon):
-    predicted = model_position.predict([[lat, lon]])[0]
+    predicted_coordinate = model_position.predict([[lat, lon]])[0]
+    predicted_time = model_time.predict([[lat, lon]])[0]
 
     if 'latitude' in mode_string:
-        return ('{\"latitude\":%f, \"longitude\":%f}' % (predicted, leave_lon))
+        return ('{\"latitude\":%f, \"longitude\":%f, \"time\":%f}' % (predicted_coordinate, leave_lon, predicted_time))
     elif 'longitude' in mode_string:
-        return ('{\"latitude\":%f, \"longitude\":%f}' % (leave_lat, predicted))
+        return ('{\"latitude\":%f, \"longitude\":%f, \"time\":%f}' % (leave_lat, predicted_coordinate, predicted_time))
     elif 'none' in mode_string:
-        return ('{\"latitude\":%f, \"longitude\":%f}' % (leave_lat, leave_lon))   # TODO: Error when 'none' and either of leave_lat and leave_lon has no value
+        return ('{\"latitude\":%f, \"longitude\":%f, \"time\":%f}' % (leave_lat, leave_lon, predicted_time))   # TODO: Error when 'none' and either of leave_lat and leave_lon has no value
     else:
         return ('{\"error\":%s}' % (mode_string))
-    
-@app.route('/time/<float:lat>-<float:lon>')
-def predict_time(lat, lon):
-    mins_to_leave = model_time.predict([[lat, lon]])[0]
-    return ('{\"time\":%f}' % (mins_to_leave))
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', debug=True)

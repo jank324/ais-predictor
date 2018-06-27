@@ -14,9 +14,11 @@ body {
 #panel {
     position: absolute;
     width: 240px;
+    height: 80%;
     margin: 10px;
     padding: 10px 20px;
     background-color: white;
+    overflow: auto;
 }
 
 #fileUpload {

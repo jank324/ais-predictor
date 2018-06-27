@@ -17,12 +17,13 @@ $(document).ready(function() {
             contentType: false,
             cache: false,
             processData: false,
-            success: function(data) {
-                console.log("Success!");
-            },
+            success: showUploadedArff,
         });
         return false;
     })
 
 })
 
+function showUploadedArff() {
+    $("#panel").html("Upload succeeded!");
+}

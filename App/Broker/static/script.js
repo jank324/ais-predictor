@@ -1,9 +1,11 @@
+var map;
 var tripJSON;
+var originMarker;
 
 $(document).ready(function() {
 
     mapboxgl.accessToken = "pk.eyJ1IjoidmhhbmtlIiwiYSI6ImNqaXBvb3poYzB5OXAzcG1mdnkwOGdqd2gifQ.3kstKqV75vv8miE3GsJRPQ";
-    var map = new mapboxgl.Map({
+    map = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/streets-v9",
         center: [6.0, 53.0],
@@ -44,7 +46,16 @@ function showTripData(tripJSON) {
 
     $("#tripTable tr").click(function() {
         $(this).addClass("selected").siblings().removeClass("selected");
-        var value=$(this).find(".latitudeCell").html();
-        console.log(value);
+
+        latitude = $(this).find(".latitudeCell").html();
+        longitude = $(this).find(".longitudeCell").html();
+        placeOriginMarker(longitude, latitude);
     })
+}
+
+function placeOriginMarker(latitude, longitude) {
+    if (originMarker != null) originMarker.remove();
+    originMarker = new mapboxgl.Marker()
+        .setLngLat([latitude, longitude])
+        .addTo(map);
 }

@@ -8,8 +8,8 @@ $(document).ready(function() {
         zoom: 4.5
     })
 
-    $("#uploadFile").submit(function() {
-        var form_data = new FormData($("#uploadFile")[0]);
+    $("#fileUpload").submit(function() {
+        var form_data = new FormData($("#fileUpload")[0]);
         $.ajax({
             type: "POST",
             url: "/uploadtrip",

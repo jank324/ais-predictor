@@ -35,6 +35,8 @@ function showTripData(tripJSON) {
     html = "<table id=\"tripTable\">";
     for (entry in tripJSON) {
         html += "<tr>";
+        html += "<td class=\"startPortCell\">" + tripJSON[entry].start_port + "</td>";
+        html += "<td class=\"endPortCell\">" + tripJSON[entry].end_port + "</td>";
         html += "<td class=\"timeCell\">" + tripJSON[entry].time + "</td>";
         html += "<td class=\"latitudeCell\">" + tripJSON[entry].latitude + "</td>"; 
         html += "<td class=\"longitudeCell\">" + tripJSON[entry].longitude + "</td>"

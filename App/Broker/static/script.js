@@ -30,11 +30,21 @@ $(document).ready(function() {
 })
 
 function showTripData(tripJSON) {
-    html = "<table>";
+    html = "<table id=\"tripTable\">";
     for (entry in tripJSON) {
-        html += "<tr><td>" + tripJSON[entry].time + "</td><td>" + tripJSON[entry].latitude + "</td><td>" + tripJSON[entry].longitude + "</td></tr>";
+        html += "<tr>";
+        html += "<td class=\"timeCell\">" + tripJSON[entry].time + "</td>";
+        html += "<td class=\"latitudeCell\">" + tripJSON[entry].latitude + "</td>"; 
+        html += "<td class=\"longitudeCell\">" + tripJSON[entry].longitude + "</td>"
+        html += "</tr>";
     }
     html += "</table>";
 
     $("#panel").html(html);
+
+    $("#tripTable tr").click(function() {
+        $(this).addClass("selected").siblings().removeClass("selected");
+        var value=$(this).find(".latitudeCell").html();
+        console.log(value);
+    })
 }

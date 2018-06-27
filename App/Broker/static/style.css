@@ -24,3 +24,8 @@ body {
 #fileUpload {
     margin: 10px;
 }
+
+tr.selected {
+    background-color: teal;
+    color: white;
+}

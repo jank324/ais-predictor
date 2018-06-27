@@ -32,7 +32,7 @@ def predict_position(lat, lon):
 @app.route('/time/<float:lat>-<float:lon>')
 def predict_time(lat, lon):
     mins_to_leave = model_time.predict([[lat, lon]])[0]
-    return ('%f' % (mins_to_leave))
+    return ('{\"time\":%f}' % (mins_to_leave))
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', debug=True)

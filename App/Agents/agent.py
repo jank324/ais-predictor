@@ -21,13 +21,13 @@ def predict_position(lat, lon):
     predicted = model_position.predict([[lat, lon]])[0]
 
     if 'latitude' in mode_string:
-        return ('%f-%f' % (predicted, leave_lon))
+        return ('{\"latitude\":%f, \"longitude\":%f}' % (predicted, leave_lon))
     elif 'longitude' in mode_string:
-        return ('%f-%f' % (leave_lat, predicted))
+        return ('{\"latitude\":%f, \"longitude\":%f}' % (leave_lat, predicted))
     elif 'none' in mode_string:
-        return ('%f-%f' % (leave_lat, leave_lon))   # TODO: Error when 'none' and either of leave_lat and leave_lon has no value
+        return ('{\"latitude\":%f, \"longitude\":%f}' % (leave_lat, leave_lon))   # TODO: Error when 'none' and either of leave_lat and leave_lon has no value
     else:
-        return ('ERROR: The agent\'s mode string is invalid: \"%s\"' % (mode_string))
+        return ('{\"error\":%s}' % (mode_string))
     
 @app.route('/time/<float:lat>-<float:lon>')
 def predict_time(lat, lon):

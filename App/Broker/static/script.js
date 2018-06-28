@@ -48,12 +48,36 @@ function showTripData(tripJSON) {
 
     $("#panel").html(html);
 
+    map.addLayer({
+        "id": "route",
+        "type": "line",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": []
+                }
+            }
+        },
+        "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+        },
+        "paint": {
+            "line-color": "#888",
+            "line-width": 8
+        }
+    })
+
     $("#tripTable tr").click(function() {
         $(this).addClass("selected").siblings().removeClass("selected");
 
         var originPoint = tripJSON[$(this).index()];
         placeOriginMarker(originPoint.longitude, originPoint.latitude);
-
+        getPrediction(originPoint);
     })
 }
 
@@ -65,9 +89,32 @@ function placeOriginMarker(latitude, longitude) {
 }
 
 function getPrediction(originPoint) {
-
+    $.ajax({ 
+        type: "POST", 
+        url: "/prediction", 
+        contentType: "application/json",
+        data: JSON.stringify(originPoint),
+        success: function(response) {
+            console.log(response);
+            plotTrip(response["route"]);
+        }
+    }); 
 }
 
-function plotTrip(tripGeoJSON) {
+function plotTrip(trip) {
+    var tripGeoJSON = {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+            "type": "LineString",
+            "coordinates": []
+        }
+    };
 
+    for (record in trip) {
+        var routePoint = [trip[record]["longitude"], trip[record]["latitude"]];
+        tripGeoJSON.geometry.coordinates.push(routePoint);
+    }
+
+    map.getSource("route").setData(tripGeoJSON);
 }

@@ -4,7 +4,8 @@ import sys
 
 app = Flask(__name__)
 
-path = sys.argv[1]
+port = int(sys.argv[1])
+path = sys.argv[2]
 
 # Figure out what you are 007!
 config_file = open('%s/config.txt' % (path), 'r')
@@ -31,4 +32,4 @@ def predict_position(lat, lon):
         return ('{\"error\":%s}' % (mode_string))
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', debug=True)
+    app.run(host = '0.0.0.0', port=port, debug=True)

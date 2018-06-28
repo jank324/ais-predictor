@@ -1,7 +1,22 @@
 import numpy as np
 import pandas as pd
+import requests
 
 learners = ['latitude', 'longitude']
+agent_urls = {
+    'rot_ham': {
+        0: '192.168.178.32:5300',
+        1: '192.168.178.32:5301',
+        2: '192.168.178.32:5302',
+        3: '192.168.178.32:5303',
+        4: '192.168.178.32:5304',
+        5: '192.168.178.32:5305'
+    },
+    'fel_rot': {
+
+    }
+}
+
 
 def load_learners(file):
     names = ['trip', 'mmsi', 'start_latitude', 'start_longitude', 'start_time', 'end_latitude', 'end_longitude', 'end_time',
@@ -25,5 +40,15 @@ def load_learners(file):
     
     return df.to_json(orient='records')
 
+def predict(origin_point):
+    predicted_route = [{'latitude': origin_point['latitude'], 'longitude': origin_point['longitude']}]
+    predicted_time = 0
 
+    for sector in agent_urls['rot_ham']:
+        url = agent_urls['rot_ham'][sector]
+        response = requests.get('http://%s/predict/%f-%f' % (url, predicted_route[-1]['latitude'], predicted_route[-1]['longitude'])).json()
+        
+        predicted_route.append({'latitude': response['latitude'], 'longitude': response['longitude']})
+        predicted_time += response['time']
 
+    return predicted_route, predicted_time

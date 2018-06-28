@@ -3,20 +3,29 @@ import pandas as pd
 import requests
 
 learners = ['latitude', 'longitude']
-agent_urls = {
-    'rot_ham': {
-        0: '192.168.178.32:5300',
-        1: '192.168.178.32:5301',
-        2: '192.168.178.32:5302',
-        3: '192.168.178.32:5303',
-        4: '192.168.178.32:5304',
-        5: '192.168.178.32:5305'
-    },
-    'fel_rot': {
 
+routes = {
+    'rot_ham': {
+        0: {
+            'area': {'min_lat': None, 'max_lat': 52.8, 'min_lon': None, 'max_lon': 4.8},
+            'agent_url': '192.168.178.32:5300'},
+        1: {
+            'area': {'min_lat': 52.8, 'max_lat': None, 'min_lon': None, 'max_lon': 4.8},
+            'agent_url': '192.168.178.32:5301'},
+        2: {
+            'area': {'min_lat': None, 'max_lat': None, 'min_lon': 4.8, 'max_lon': 6.0},
+            'agent_url': '192.168.178.32:5302'},
+        3: {
+            'area': {'min_lat': None, 'max_lat': None, 'min_lon': 6.0, 'max_lon': 7.2},
+            'agent_url': '192.168.178.32:5303'},
+        4: {
+            'area': {'min_lat': None, 'max_lat': None, 'min_lon': 7.2, 'max_lon': 8.6},
+            'agent_url': '192.168.178.32:5304'},
+        5: {
+            'area': {'min_lat': None, 'max_lat': None, 'min_lon': 8.6, 'max_lon': 9.81},
+            'agent_url': '192.168.178.32:5305'}
     }
 }
-
 
 def load_learners(file):
     names = ['trip', 'mmsi', 'start_latitude', 'start_longitude', 'start_time', 'end_latitude', 'end_longitude', 'end_time',
@@ -40,15 +49,29 @@ def load_learners(file):
     
     return df.to_json(orient='records')
 
+def is_in_area(point, area):
+    if area['min_lat'] != None and point['latitude'] < area['min_lat']:
+        return False
+    if area['max_lat'] != None and point['latitude'] > area['max_lat']:
+        return False
+    if area['min_lon'] != None and point['longitude'] < area['min_lon']:
+        return False
+    if area['max_lon'] != None and point['longitude'] > area['max_lon']:
+        return False
+    return True
+
 def predict(origin_point):
+    route = routes['rot_ham']
+
     predicted_route = [{'latitude': origin_point['latitude'], 'longitude': origin_point['longitude']}]
     predicted_time = 0
 
-    for sector in agent_urls['rot_ham']:
-        url = agent_urls['rot_ham'][sector]
-        response = requests.get('http://%s/predict/%f-%f' % (url, predicted_route[-1]['latitude'], predicted_route[-1]['longitude'])).json()
-        
-        predicted_route.append({'latitude': response['latitude'], 'longitude': response['longitude']})
-        predicted_time += response['time']
+    for sector in route:
+        if is_in_area(point=predicted_route[-1], area=route[sector]['area']):
+            url = route[sector]['agent_url']
+            response = requests.get('http://%s/predict/%f-%f' % (url, predicted_route[-1]['latitude'], predicted_route[-1]['longitude'])).json()
+
+            predicted_route.append({'latitude': response['latitude'], 'longitude': response['longitude']})
+            predicted_time += response['time']
 
     return predicted_route, predicted_time

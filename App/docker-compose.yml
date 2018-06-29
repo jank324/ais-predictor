@@ -14,6 +14,9 @@ services:
       - rot_ham_s3
       - rot_ham_s4
       - rot_ham_s5
+      - fel_rot_s0
+      - fel_rot_s1
+      - fel_rot_s2
 
   rot_ham_s0:
     build: ./Agents/rot_ham_s0
@@ -39,4 +42,16 @@ services:
     build: ./Agents/rot_ham_s5
     ports:
       - 5305:5000
+  fel_rot_s0:
+    build: ./Agents/fel_rot_s0
+    ports:
+      - 5400:5000
+  fel_rot_s1:
+    build: ./Agents/fel_rot_s1
+    ports:
+      - 5401:5000
+  fel_rot_s2:
+    build: ./Agents/fel_rot_s2
+    ports:
+      - 5402:5000
     

@@ -24,6 +24,17 @@ routes = {
         5: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 8.6, 'max_lon': 9.81},
             'agent_url': '134.28.190.215:5305'}
+    },
+    'fel_rot': {
+        0: {
+            'area': {'min_lat': None, 'max_lat': None, 'min_lon': None, 'max_lon': 2.2},
+            'agent_url': '134.28.190.215:5400'},
+        1: {
+            'area': {'min_lat': None, 'max_lat': None, 'min_lon': 2.2, 'max_lon': 3.2},
+            'agent_url': '134.28.190.215:5401'},
+        2: {
+            'area': {'min_lat': None, 'max_lat': None, 'min_lon': 3.2, 'max_lon': 3.94},
+            'agent_url': '134.28.190.215:5402'}
     }
 }
 
@@ -44,6 +55,9 @@ def load_learners(file):
     df.loc[df['start_port'] == 'ROTTERDAM', 'start_port'] = 'ROT'
     df.loc[df['end_port'] == 'HAMBURG', 'end_port'] = 'HAM'
 
+    df.loc[(df['start_port']) == 'ROT' & (df['end_port']) == 'HAM', 'route'] = 'rot_ham'
+    df.loc[(df['start_port']) == 'FEL' & (df['end_port']) == 'ROT', 'route'] = 'fel_rot'
+
     df = df.sort_values('time')
     df = df[['time', 'start_port', 'end_port'] + learners]
     
@@ -61,7 +75,7 @@ def is_in_area(point, area):
     return True
 
 def predict(origin_point):
-    route = routes['rot_ham']
+    route = routes[origin_point['route']]
 
     predicted_route = [{'latitude': origin_point['latitude'], 'longitude': origin_point['longitude']}]
     predicted_time = 0

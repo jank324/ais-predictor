@@ -1,5 +1,12 @@
 from flask import Flask, flash, jsonify, request, render_template, session
 import broker
+import os
+
+ON_HEROKU = os.environ.get('ON_HEROKU')
+if ON_HEROKU:
+    port = int(os.environ.get('PORT', 17995))
+else:
+    port = 80
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -20,4 +27,4 @@ def make_prediction():
     return jsonify(info)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)

@@ -4,18 +4,15 @@ import sys
 
 app = Flask(__name__)
 
-port = int(sys.argv[1])
-path = sys.argv[2]
-
 # Figure out what you are 007!
-config_file = open('%s/config.txt' % (path), 'r')
+config_file = open('config.txt', 'r')
 mode_string = config_file.readline()
 leave_lat = float(config_file.readline())
 leave_lon = float(config_file.readline())
 
 # Load models
-model_position = pickle.load(open('%s/model_position.pkl' % (path), 'rb'))
-model_time = pickle.load(open('%s/model_time.pkl' % (path), 'rb'))
+model_position = pickle.load(open('model_position.pkl', 'rb'))
+model_time = pickle.load(open('model_time.pkl', 'rb'))
 
 @app.route('/predict/<float:lat>-<float:lon>')
 def predict_position(lat, lon):
@@ -32,4 +29,4 @@ def predict_position(lat, lon):
         return ('{\"error\":%s}' % (mode_string))
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', port=port, debug=True)
+    app.run(host = '0.0.0.0', port=5000, debug=True)

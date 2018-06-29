@@ -53,13 +53,15 @@ def load_learners(file):
     df.loc[df['sog'] > 25.6, 'sog'] = np.nan
 
     df.loc[df['start_port'] == 'ROTTERDAM', 'start_port'] = 'ROT'
+    df.loc[df['start_port'] == 'FELIXSTOWE', 'start_port'] = 'FEL'
     df.loc[df['end_port'] == 'HAMBURG', 'end_port'] = 'HAM'
+    df.loc[df['end_port'] == 'ROTTERDAM', 'end_port'] = 'ROT'
 
-    df.loc[(df['start_port']) == 'ROT' & (df['end_port']) == 'HAM', 'route'] = 'rot_ham'
-    df.loc[(df['start_port']) == 'FEL' & (df['end_port']) == 'ROT', 'route'] = 'fel_rot'
+    df.loc[(df['start_port'] == 'ROT') & (df['end_port'] == 'HAM'), 'route'] = 'rot_ham'
+    df.loc[(df['start_port'] == 'FEL') & (df['end_port'] == 'ROT'), 'route'] = 'fel_rot'
 
     df = df.sort_values('time')
-    df = df[['time', 'start_port', 'end_port'] + learners]
+    df = df[['time', 'route', 'start_port', 'end_port'] + learners]
     
     return df.to_json(orient='records')
 

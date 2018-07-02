@@ -79,15 +79,24 @@ def is_in_area(point, area):
 def predict(origin_point):
     route = routes[origin_point['route']]
 
-    predicted_route = [{'latitude': origin_point['latitude'], 'longitude': origin_point['longitude']}]
+    predicted_route = [{'latitude': origin_point['latitude'],
+                        'longitude': origin_point['longitude'],
+                        'cog': origin_point['cog'],
+                        'sog': origin_point['sog']}]
     predicted_time = 0
 
     for sector in route:
         if is_in_area(point=predicted_route[-1], area=route[sector]['area']):
             url = route[sector]['agent_url']
-            response = requests.get('http://%s/predict/%f-%f' % (url, predicted_route[-1]['latitude'], predicted_route[-1]['longitude'])).json()
+            response = requests.get('http://%s/predict/%f-%f-%f-%f' % (url, predicted_route[-1]['latitude'],
+                                                                            predicted_route[-1]['longitude'],
+                                                                            predicted_route['cog'],
+                                                                            predicted_route['sog'])).json()
 
-            predicted_route.append({'latitude': response['latitude'], 'longitude': response['longitude']})
+            predicted_route.append({'latitude': response['latitude'],
+                                    'longitude': response['longitude'],
+                                    'cog': response['cog'],
+                                    'sog': response['sog']})
             predicted_time += response['time']
 
     return predicted_route, predicted_time

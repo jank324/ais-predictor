@@ -24,12 +24,22 @@ def predict_position(lat, lon, cog, sog):
     predicted_time = model_time.predict([[lat, lon, cog, sog]])[0]
 
     if 'latitude' in mode_string:
+        print('{\"latitude\":%f, \"longitude\":%f, \"cog\":%f, \"sog\":%f, \"time\":%f}' % (predicted_coordinate,
+                                                                                              leave_lon,
+                                                                                              predicted_cog,
+                                                                                              predicted_sog,
+                                                                                              predicted_time))
         return ('{\"latitude\":%f, \"longitude\":%f, \"cog\":%f, \"sog\":%f, \"time\":%f}' % (predicted_coordinate,
                                                                                               leave_lon,
                                                                                               predicted_cog,
                                                                                               predicted_sog,
                                                                                               predicted_time))
     elif 'longitude' in mode_string:
+        print('{\"latitude\":%f, \"longitude\":%f, \"cog\":%f, \"sog\":%f, \"time\":%f}' % (leave_lat,
+                                                                                              predicted_coordinate,
+                                                                                              predicted_cog,
+                                                                                              predicted_sog,
+                                                                                              predicted_time))
         return ('{\"latitude\":%f, \"longitude\":%f, \"cog\":%f, \"sog\":%f, \"time\":%f}' % (leave_lat,
                                                                                               predicted_coordinate,
                                                                                               predicted_cog,

@@ -14,10 +14,10 @@ leave_lon = float(config_file.readline())
 model_position = pickle.load(open('model_position.pkl', 'rb'))
 model_time = pickle.load(open('model_time.pkl', 'rb'))
 
-@app.route('/predict/<float:lat>-<float:lon>')
-def predict_position(lat, lon):
-    predicted_coordinate = model_position.predict([[lat, lon]])[0]
-    predicted_time = model_time.predict([[lat, lon]])[0]
+@app.route('/predict/<float:lat>-<float:lon>-<float:cog>-<float:sog>')
+def predict_position(lat, lon, cog, sog):
+    predicted_coordinate = model_position.predict([[lat, lon, cog, sog]])[0]
+    predicted_time = model_time.predict([[lat, lon, cog, sog]])[0]
 
     if 'latitude' in mode_string:
         return ('{\"latitude\":%f, \"longitude\":%f, \"time\":%f}' % (predicted_coordinate, leave_lon, predicted_time))

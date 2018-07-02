@@ -8,21 +8,35 @@ body {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 100%;
+    left: 240px;
+    right: 0;
 }
 
 #panel {
-    position: absolute;
+    float: left;
     width: 240px;
-    height: 80%;
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: white;
+    height: 100%;
+    left: 0;
+    background-color: burlywood;
+}
+
+#infoField {
+    height: 40px;
+    margin: 0;
+    background-color: green;
+}
+
+#tripTableContainer {
+    position: absolute;
+    top: 110px;
+    bottom: 0;
+    width: 240px;
+    background-color: gold;
     overflow: auto;
 }
 
-#fileUpload {
-    margin: 10px;
+#tripTable {
+    margin: 0;
 }
 
 tr.selected {

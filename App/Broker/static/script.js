@@ -46,7 +46,7 @@ function showTripData(tripJSON) {
     }
     html += "</table>";
 
-    $("#panel").html(html);
+    $("#tripTableContainer").html(html);
 
     map.addLayer({
         "id": "route",

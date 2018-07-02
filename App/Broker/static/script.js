@@ -12,16 +12,24 @@ $(document).ready(function() {
         zoom: 4.5
     })
 
-    $("#fileUpload").submit(uploadFile);
+    $(".uploadButton").click(function() {
+        $("#fileInput").trigger("click");
+    })
+    $("#fileInput").change(uploadFile);
+    //$("#fileUpload").submit(uploadFile);
 
 })
 
 function uploadFile() {
-    var form_data = new FormData($("#fileUpload")[0]);
+    var tripFile = $("#fileInput")[0].files[0];
+
+    var formData = new FormData();
+    formData.append("tripfile", tripFile);
+
     $.ajax({
         type: "POST",
         url: "/trip",
-        data: form_data,
+        data: formData,
         contentType: false,
         cache: false,
         processData: false,
@@ -30,6 +38,7 @@ function uploadFile() {
             showTripData(tripJSON);
         },
     });
+
     return false;
 }
 
@@ -45,8 +54,15 @@ function showTripData(tripJSON) {
         html += "</tr>";
     }
     html += "</table>";
+    $(".listing").html(html);
 
-    $("#tripTableContainer").html(html);
+    $("#tripTable tr").click(function() {
+        $(this).addClass("selected").siblings().removeClass("selected");
+
+        var originPoint = tripJSON[$(this).index()];
+        placeOriginMarker(originPoint.longitude, originPoint.latitude);
+        getPrediction(originPoint);
+    })
 
     map.addLayer({
         "id": "route",
@@ -70,14 +86,6 @@ function showTripData(tripJSON) {
             "line-color": "#888",
             "line-width": 8
         }
-    })
-
-    $("#tripTable tr").click(function() {
-        $(this).addClass("selected").siblings().removeClass("selected");
-
-        var originPoint = tripJSON[$(this).index()];
-        placeOriginMarker(originPoint.longitude, originPoint.latitude);
-        getPrediction(originPoint);
     })
 }
 

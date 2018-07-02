@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import requests
 
-learners = ['latitude', 'longitude']
+learners = ['latitude', 'longitude', 'cog', 'sog']
 
 routes = {
     'rot_ham': {
@@ -90,8 +90,8 @@ def predict(origin_point):
             url = route[sector]['agent_url']
             response = requests.get('http://%s/predict/%f-%f-%f-%f' % (url, predicted_route[-1]['latitude'],
                                                                             predicted_route[-1]['longitude'],
-                                                                            predicted_route['cog'],
-                                                                            predicted_route['sog'])).json()
+                                                                            predicted_route[-1]['cog'],
+                                                                            predicted_route[-1]['sog'])).json()
 
             predicted_route.append({'latitude': response['latitude'],
                                     'longitude': response['longitude'],

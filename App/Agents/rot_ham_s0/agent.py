@@ -1,6 +1,14 @@
 from flask import Flask
 import pickle
 import sys
+import os
+
+ON_HEROKU = os.environ.get('ON_HEROKU')
+if ON_HEROKU:
+    port = int(os.environ.get('PORT', 17995))
+else:
+    port = 5000
+
 
 app = Flask(__name__)
 
@@ -55,4 +63,4 @@ def predict_position(lat, lon, cog, sog):
         return ('{\"error\":%s}' % (mode_string))
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0', port=5000, debug=True)
+    app.run(host = '0.0.0.0', port=port, debug=True)

@@ -105,6 +105,7 @@ function getPrediction(originPoint) {
         success: function(response) {
             console.log(response);
             plotTrip(response["route"]);
+            displayRemainingTime(response["time"]);
         }
     }); 
 }
@@ -125,4 +126,8 @@ function plotTrip(trip) {
     }
 
     map.getSource("route").setData(tripGeoJSON);
+}
+
+function displayRemainingTime(time) {
+    $(".info").html("<span>" + time + "</span>")
 }

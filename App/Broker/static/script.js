@@ -23,6 +23,11 @@ $(document).ready(function() {
 function uploadFile() {
     var tripFile = $("#fileInput")[0].files[0];
 
+    if (tripFile.size > 10000000 || !tripFile.name.endsWith(".arff")) {
+        $("body").html("<div class=\"failImage\"></div>");
+        return;
+    }
+
     var formData = new FormData();
     formData.append("tripfile", tripFile);
 
@@ -46,11 +51,11 @@ function showTripData(tripJSON) {
     html = "<table id=\"tripTable\">";
     for (entry in tripJSON) {
         html += "<tr>";
-        html += "<td class=\"startPortCell\">" + tripJSON[entry].start_port + "</td>";
-        html += "<td class=\"endPortCell\">" + tripJSON[entry].end_port + "</td>";
-        html += "<td class=\"timeCell\">" + tripJSON[entry].time + "</td>";
-        html += "<td class=\"latitudeCell\">" + tripJSON[entry].latitude + "</td>"; 
-        html += "<td class=\"longitudeCell\">" + tripJSON[entry].longitude + "</td>"
+        html += "<td class=\"startPortCell\"> " + tripJSON[entry].start_port + " </td>";
+        html += "<td class=\"endPortCell\"> " + tripJSON[entry].end_port + " </td>";
+        html += "<td class=\"timeCell\"> " + milisToDateString(tripJSON[entry].time) + "  </td>";
+        html += "<td class=\"latitudeCell\"> " + tripJSON[entry].latitude + " </td>"; 
+        html += "<td class=\"longitudeCell\"> " + tripJSON[entry].longitude + " </td>"
         html += "</tr>";
     }
     html += "</table>";
@@ -59,8 +64,15 @@ function showTripData(tripJSON) {
     $("#tripTable tr").click(function() {
         $(this).addClass("selected").siblings().removeClass("selected");
 
+        $(".info").html("<span>Waiting for prediction ...</span>");
         var originPoint = tripJSON[$(this).index()];
         placeOriginMarker(originPoint.longitude, originPoint.latitude);
+        if (originPoint.route == "rot_ham") {
+            map.flyTo({center: [6.254, 52.767], zoom: 6.350});
+        } else if (originPoint.route == "fel_rot") {
+            map.flyTo({center: [2.813, 51.961], zoom: 6.800});
+        }
+
         getPrediction(originPoint);
     })
 
@@ -89,6 +101,44 @@ function showTripData(tripJSON) {
     })
 }
 
+function milisToDateString(unixMilis) {
+    var date = new Date(unixMilis);
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    
+    if (day < 10) {
+        day = "0" + day;
+    }
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    return day + "." + month + "." + year + "-" + hours + ":" + minutes;
+}
+
+function deltaMinutesToString(deltaMinutes) {
+    var hours   = Math.floor(deltaMinutes / 60);
+    var minutes = Math.floor(deltaMinutes - (hours * 60));
+
+    if (hours < 10) {
+        hours   = "0" + hours;
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    
+    return hours + ":" + minutes;
+}
+
 function placeOriginMarker(latitude, longitude) {
     if (originMarker != null) originMarker.remove();
     originMarker = new mapboxgl.Marker()
@@ -103,7 +153,6 @@ function getPrediction(originPoint) {
         contentType: "application/json",
         data: JSON.stringify(originPoint),
         success: function(response) {
-            console.log(response);
             plotTrip(response["route"]);
             displayRemainingTime(response["time"]);
         }
@@ -129,5 +178,5 @@ function plotTrip(trip) {
 }
 
 function displayRemainingTime(time) {
-    $(".info").html("<span>" + time + "</span>")
+    $(".info").html("<span><b>" + deltaMinutesToString(time) + "</b> hours remaining until arrival</span>");
 }

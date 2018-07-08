@@ -62,6 +62,8 @@ def load_learners(file):
 
     df = df.sort_values('time')
     df = df[['time', 'route', 'start_port', 'end_port'] + learners]
+
+    df = df[:-1]
     
     return df.to_json(orient='records')
 

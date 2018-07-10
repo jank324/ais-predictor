@@ -8,33 +8,33 @@ routes = {
     'rot_ham': {
         0: {
             'area': {'min_lat': None, 'max_lat': 52.8, 'min_lon': None, 'max_lon': 4.8},
-            'agent_url': '134.28.183.207:5300'},
+            'agent_url': 'rot-ham-s0.herokuapp.com'},
         1: {
             'area': {'min_lat': 52.8, 'max_lat': None, 'min_lon': None, 'max_lon': 4.8},
-            'agent_url': '134.28.183.207:5301'},
+            'agent_url': 'rot-ham-s1.herokuapp.com'},
         2: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 4.8, 'max_lon': 6.0},
-            'agent_url': '134.28.183.207:5302'},
+            'agent_url': 'rot-ham-s2.herokuapp.com'},
         3: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 6.0, 'max_lon': 7.2},
-            'agent_url': '134.28.183.207:5303'},
+            'agent_url': 'rot-ham-s3.herokuapp.com'},
         4: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 7.2, 'max_lon': 8.6},
-            'agent_url': '134.28.183.207:5304'},
+            'agent_url': 'rot-ham-s4.herokuapp.com'},
         5: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 8.6, 'max_lon': 9.81},
-            'agent_url': '134.28.183.207:5305'}
+            'agent_url': 'rot-ham-s5.herokuapp.com'}
     },
     'fel_rot': {
         0: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': None, 'max_lon': 2.2},
-            'agent_url': '134.28.183.207:5400'},
+            'agent_url': 'fel-rot-s0.herokuapp.com'},
         1: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 2.2, 'max_lon': 3.2},
-            'agent_url': '134.28.183.207:5401'},
+            'agent_url': 'fel-rot-s1.herokuapp.com'},
         2: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 3.2, 'max_lon': 3.94},
-            'agent_url': '134.28.183.207:5402'}
+            'agent_url': 'fel-rot-s2.herokuapp.com'}
     }
 }
 
@@ -62,6 +62,8 @@ def load_learners(file):
 
     df = df.sort_values('time')
     df = df[['time', 'route', 'start_port', 'end_port'] + learners]
+
+    df = df[:-1]
     
     return df.to_json(orient='records')
 

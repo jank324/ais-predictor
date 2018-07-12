@@ -2,6 +2,12 @@
 
 Did you ever want to know when and where your ship arrives? Worry no more ...
 
+## Generelle Struktur
+
+* 'App' enthält alles zu der Anwendung (Source Code, Dockerfiles, Konfigurationsdateien etc.)
+* 'data' enthält die Datensätze in originaler, bearbeiteter und vielen anderen Formen, sowie die Jupyter Notebooks, die wir zum Bearbeiten benutzt haben
+* 'Images' enthält die Bilder, die wir für die Präsentation generiert haben
+
 ## Starten der App - Online Version
 
 Die Online-Version der App, wie wir sie präsentiert haben, ist auf Heroku
@@ -32,6 +38,10 @@ Die Daten wurden in Jupyter Notebooks (.ipynb Dateien) bereinigt. Die Notebooks
 finden Sie im ordner 'data'. Damit Sie die Notebooks ansehen können, ohne
 Jupyter Notebook zu installieren, haben wir zu jedem Notebook eine HTML-Datei
 mit dem gleichen Namen generiert.
+Sollten Sie die Jupyter Notebooks selber ausführen wollen, benötigen Sie
+Jupyter Notebook, Python 3 sowie die Bibliotheken Numpy, Pandas, Cartopy und
+Matplotlib. Der einfachste Weg diese zu installieren ist durch eine Anaconda-
+Installation, die alles enthalten sollte.
 
 Folgende Notebooks haben wir erstellt:
 

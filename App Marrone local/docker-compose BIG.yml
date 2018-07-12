@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  broker:
+    build: ./Broker
+    volumes:
+      - ./Broker:/usr/src/app
+    ports:
+      - 5000:80
+    depends_on:
+      - rot_ham_s0
+      - rot_ham_s1
+      - rot_ham_s2
+      - rot_ham_s3
+      - rot_ham_s4
+      - rot_ham_s5
+      - fel_rot_s0
+      - fel_rot_s1
+      - fel_rot_s2
+
+  rot_ham_s0:
+    build: ./Agents/rot_ham_s0
+    ports:
+      - 5300:5000
+  rot_ham_s1:
+    build: ./Agents/rot_ham_s1
+    ports:
+      - 5301:5000
+  rot_ham_s2:
+    build: ./Agents/rot_ham_s2
+    ports:
+      - 5302:5000
+  rot_ham_s3:
+    build: ./Agents/rot_ham_s3
+    ports:
+      - 5303:5000
+  rot_ham_s4:
+    build: ./Agents/rot_ham_s4
+    ports:
+      - 5304:5000
+  rot_ham_s5:
+    build: ./Agents/rot_ham_s5
+    ports:
+      - 5305:5000
+  fel_rot_s0:
+    build: ./Agents/fel_rot_s0
+    ports:
+      - 5400:5000
+  fel_rot_s1:
+    build: ./Agents/fel_rot_s1
+    ports:
+      - 5401:5000
+  fel_rot_s2:
+    build: ./Agents/fel_rot_s2
+    ports:
+      - 5402:5000
+    

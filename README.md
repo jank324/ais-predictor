@@ -30,3 +30,12 @@ Zum starten der lokalen Version, führen Sie den Befehl 'docker-compose build'
 und dann 'docker-compose up' im Verzeichnis 'App Marrone local' aus. Die App
 ist dann mit einem Webbrowser auf Ihrer lokalen Maschine unter dem Port 5000
 zu erreichen.
+
+## Preprocessing der Daten
+Die Daten wurden in Jupyter Notebooks (.ipynb Dateien) bereinigt. Die Notebooks
+finden Sie im ordner 'data'. Damit Sie die Notebooks ansehen können, ohne
+Jupyter Notebook zu installieren, haben wir zu jedem Notebook eine HTML-Datei
+mit dem gleichen Namen generiert.
+Die Notebooks mit 'filter' im Namen wurden zum bereinigen benutzt. Aus ihnen
+wurden die gereinigten Daten dann als .pkl Dateien exportiert, damit Sie von
+den 'learning' Notebooks für das Training benutzt werden können.

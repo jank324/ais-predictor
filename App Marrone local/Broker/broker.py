@@ -8,33 +8,33 @@ routes = {
     'rot_ham': {
         0: {
             'area': {'min_lat': None, 'max_lat': 52.8, 'min_lon': None, 'max_lon': 4.8},
-            'agent_url': 'rot-ham-s0.herokuapp.com'},
+            'agent_url': 'host.docker.internal:5300'},
         1: {
             'area': {'min_lat': 52.8, 'max_lat': None, 'min_lon': None, 'max_lon': 4.8},
-            'agent_url': 'rot-ham-s1.herokuapp.com'},
+            'agent_url': 'host.docker.internal:5301'},
         2: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 4.8, 'max_lon': 6.0},
-            'agent_url': 'rot-ham-s2.herokuapp.com'},
+            'agent_url': 'host.docker.internal:5302'},
         3: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 6.0, 'max_lon': 7.2},
-            'agent_url': 'rot-ham-s3.herokuapp.com'},
+            'agent_url': 'host.docker.internal:5303'},
         4: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 7.2, 'max_lon': 8.6},
-            'agent_url': 'rot-ham-s4.herokuapp.com'},
+            'agent_url': 'host.docker.internal:5304'},
         5: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 8.6, 'max_lon': 9.81},
-            'agent_url': 'rot-ham-s5.herokuapp.com'}
+            'agent_url': 'host.docker.internal:5305'}
     },
     'fel_rot': {
         0: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': None, 'max_lon': 2.2},
-            'agent_url': 'fel-rot-s0.herokuapp.com'},
+            'agent_url': 'host.docker.internal:5400'},
         1: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 2.2, 'max_lon': 3.2},
-            'agent_url': 'fel-rot-s1.herokuapp.com'},
+            'agent_url': 'host.docker.internal:5401'},
         2: {
             'area': {'min_lat': None, 'max_lat': None, 'min_lon': 3.2, 'max_lon': 3.94},
-            'agent_url': 'fel-rot-s2.herokuapp.com'}
+            'agent_url': 'host.docker.internal:5402'}
     }
 }
 

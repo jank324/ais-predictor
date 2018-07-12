@@ -1,3 +1,0 @@
-latitude
-nan
-6.0

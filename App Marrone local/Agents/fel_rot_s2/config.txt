@@ -1,3 +1,0 @@
-latitude
-nan
-3.94

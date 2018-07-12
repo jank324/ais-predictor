@@ -1,3 +1,0 @@
-What is predicted? latitude / longitude / destination
-leave latitude
-leave longitude

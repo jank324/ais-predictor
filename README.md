@@ -32,6 +32,14 @@ Die Daten wurden in Jupyter Notebooks (.ipynb Dateien) bereinigt. Die Notebooks
 finden Sie im ordner 'data'. Damit Sie die Notebooks ansehen können, ohne
 Jupyter Notebook zu installieren, haben wir zu jedem Notebook eine HTML-Datei
 mit dem gleichen Namen generiert.
-Die Notebooks mit 'filter' im Namen wurden zum bereinigen benutzt. Aus ihnen
-wurden die gereinigten Daten dann als .pkl Dateien exportiert, damit Sie von
-den 'learning' Notebooks für das Training benutzt werden können.
+
+Folgende Notebooks haben wir erstellt:
+
+* filter FEL-ROT data.ipynb -> Datenanalyse und -bereinigung auf Felixstowe-Rotterdam
+* filter ROT-HAM data.ipynb -> Datenanalyse und -bereinigung auf Rotterdam-Hamburg
+* learning FEL-ROT.ipynb -> Trainieren der Modelle für Felixstowe-Rotterdam (verteilt)
+* learning ROT-HAM.ipynb -> Trainieren der Modelle für Rotterdam-Hamburg (verteilt)
+* learning FEL-ROT-complete-.ipynb -> Trainieren der Modelle für Felixstowe-Rotterdam (Single-Agent)
+* learning ROT-HAM-complete.ipynb -> Trainieren der Modelle für Rotterdam-Hamburg (Single-Agent)
+* model_evaluation-fel-rot.ipynb -> Evaluaieren der Modelle aus der Anwendung auf Felixstowe-Rotterdam
+* model_evaluation-rot-ham.ipynb -> Evaluaieren der Modelle aus der Anwendung auf Rotterdam-Hamburg

@@ -1,4 +1,8 @@
-# Starten der App - Online Version
+# AIS-Predictor
+
+Did you ever want to know when and where your ship arrives? Worry no more ...
+
+## Starten der App - Online Version
 
 Die Online-Version der App, wie wir sie präsentiert haben, ist auf Heroku
 gehostet. Der Broker und die Agents laufen auf je einem sogenannten Dyno, einer
@@ -14,7 +18,7 @@ werden.
 Da das Aufwecken aller Agents ein bischen fummelig ist, haben wir für Sie eine
 Offline-Version vorbereiten. Sehen Sie dazu die nächste Sektion dieser README.
 
-# Starten der App - Offline Version
+## Starten der App - Offline Version
 
 Da der Broker und alle Agents in je einem Docker-Container laufen, ist es sehr
 einfach sie auf so ziemlich jeder beliebigen Maschine auszuführen. Das sollte

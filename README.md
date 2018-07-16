@@ -38,6 +38,7 @@ Die Daten wurden in Jupyter Notebooks (.ipynb Dateien) bereinigt. Die Notebooks
 finden Sie im ordner 'data'. Damit Sie die Notebooks ansehen können, ohne
 Jupyter Notebook zu installieren, haben wir zu jedem Notebook eine HTML-Datei
 mit dem gleichen Namen generiert.
+
 Sollten Sie die Jupyter Notebooks selber ausführen wollen, benötigen Sie
 Jupyter Notebook, Python 3 sowie die Bibliotheken Numpy, Pandas, Cartopy und
 Matplotlib. Der einfachste Weg diese zu installieren ist durch eine Anaconda-

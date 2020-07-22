@@ -1,56 +1,25 @@
 # AIS-Predictor
 
-Did you ever want to know when and where your ship arrives? Worry no more ...
+Did you ever want to know when and where your ship arrives? Worry no more ... 😎
 
-## Generelle Struktur
+## About
 
-* 'App' enthält alles zu der Anwendung (Source Code, Dockerfiles, Konfigurationsdateien etc.)
-* 'data' enthält die Datensätze in originaler, bearbeiteter und vielen anderen Formen, sowie die Jupyter Notebooks, die wir zum Bearbeiten benutzt haben
-* 'Images' enthält die Bilder, die wir für die Präsentation generiert haben
+This is our project of a distributed machine learning application to predict the routes and ETAs of ships based on their AIS data, built as the summer term assignment for the *Software Development* module at *Hamburg University of Technology*.
 
-## Starten der App - Online Version
+The application we develeped uses a *broker-agent* architecture. The *broker* is the centerpiece of this architecture. It servers a web interface where the user can upload the input data to run predictions on (as a `.arff` file) and then see a visual representation of the predicted route on a map. In order to predict an accurate route for the given AIS data sample of a ship, the broker sends out requests to multiple *agents* - other servers, each an "expert" for its own sector of a ny of the two routes considered in this project. The sectors are shown in the map below.
 
-Die Online-Version der App, wie wir sie präsentiert haben, ist auf Heroku
-gehostet. Der Broker und die Agents laufen auf je einem sogenannten Dyno, einer
-eigenen Maschine. Die App ist erreichbar unter 'ais-predictor.herokuapp.com'.
-Zu beachtet ist dabei, dass die Dynos nach 30 Minuten Inaktivität in einen
-Schlafmodus wechseln. Für den Broker bedeutet das, dass es einfach nur ein
-wenig länger dauert, bis die Webseite lädt. Für die Agents bedeutet der
-Schlafmodus aber, dass man ein paar mal Predictions anstoßen muss, bis sie alle
-aufwachen. Dazu öffnen Sie einfach die Webapp, laden eine .arff-Datei und
-führen für ein paar Predictions auf beiden Strecken aus. Führen Sie die
-Predictions auf möglichst frühen Datenpunkten aus, damit alle Agents aufgeweckt
-werden.
+![Maps of Agent Sectors](Images/readme_img_zones.png)
 
-Wenn jemand das System selber aufsetzen möchte, dann muss nur der Ordner des
-jeweiligen Agents bzw. des Brokers auf die Maschine kopiert werden, auf der der
-jeweilige Teil des Programms laufen soll. Sofern Docker installiert ist, kann
-man dann einfach das Docker Image builden und starten. Im Source Code des
-Brokers müssen ggfs. die URLs der Agents eingetragen werden.
+For each agent, we selected the corresponding data, clean and preprocessed it, and then trained three seperate models on the data - a Random Forrest, an Artificial Neural Network, and A K-Nearest-Neighbour regressor. The agent returns to the agent the output of the model that performed best on the evaluation on the test data. Once all agents have returned their predictions, the broker shows the predicted route in the web interface. See below for a diagram of this communication scheme.
 
-Ebenso lässt sich das Programm einfach um Agents und Routen erweitern, indem
-man einen Agent kopiert, die Konfigurationsdatei anpasst und die Machine
-Learning Modelle austauscht. Der neue Agent muss dann beim Broker unter der
-entsprechenden Route mit seiner URL / IP-Adresse registriert werden.
+![Communication between Client, Broker, and Agents](Images/readme_img_communication.png)
 
-## Preprocessing der Daten
-Die Daten wurden in Jupyter Notebooks (.ipynb Dateien) bereinigt. Die Notebooks
-finden Sie im ordner 'data'. Damit Sie die Notebooks ansehen können, ohne
-Jupyter Notebook zu installieren, haben wir zu jedem Notebook eine HTML-Datei
-mit dem gleichen Namen generiert.
+All implementations are written in *Python*. Data preprocessing and training of the models was done using the *Scikit-learn* and *Pandas* packages inside of *Jupyter* notebooks. The final product is running *Flask* web servers inside of *Docker* containers. For an overview of the complete tech stack, see the image below.
 
-Sollten Sie die Jupyter Notebooks selber ausführen wollen, benötigen Sie
-Jupyter Notebook, Python 3 sowie die Bibliotheken Numpy, Pandas, Cartopy und
-Matplotlib. Der einfachste Weg diese zu installieren ist durch eine Anaconda-
-Installation, die alles enthalten sollte.
+![Tech Stack](Images/readme_img_techstack.png)
 
-Folgende Notebooks haben wir erstellt:
+## Run it yourself
 
-* filter FEL-ROT data.ipynb -> Datenanalyse und -bereinigung auf Felixstowe-Rotterdam
-* filter ROT-HAM data.ipynb -> Datenanalyse und -bereinigung auf Rotterdam-Hamburg
-* learning FEL-ROT.ipynb -> Trainieren der Modelle für Felixstowe-Rotterdam (verteilt)
-* learning ROT-HAM.ipynb -> Trainieren der Modelle für Rotterdam-Hamburg (verteilt)
-* learning FEL-ROT-complete-.ipynb -> Trainieren der Modelle für Felixstowe-Rotterdam (Single-Agent)
-* learning ROT-HAM-complete.ipynb -> Trainieren der Modelle für Rotterdam-Hamburg (Single-Agent)
-* model_evaluation-fel-rot.ipynb -> Evaluaieren der Modelle aus der Anwendung auf Felixstowe-Rotterdam
-* model_evaluation-rot-ham.ipynb -> Evaluaieren der Modelle aus der Anwendung auf Rotterdam-Hamburg
+The easiest way to try is to use the version we hosted ourselves on *Heroku*. Just visit [ais-predictor.herokuapp.com], upload a correctly sructured `.arff` file of AIS data and predict away. The servers might take a moment to wake up because Heroku puts them into sleep mode after sitting idle for 30 minutes. Note that, unfortunately, we cannot provie our original `.arff` files for copyright reasons.
+
+Alternatively, you may run the Docker images for the broker and all agents yourself. Keep in mind that you will probably need to change the agent URLs given to the broker.

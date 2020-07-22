@@ -1,4 +1,4 @@
-# AIS-Predictor
+# AIS-Predictor 🛥
 
 Did you ever want to know when and where your ship arrives? Worry no more ... 😎
 
@@ -10,7 +10,7 @@ The application we develeped uses a *broker-agent* architecture. The *broker* is
 
 ![Maps of Agent Sectors](Images/readme_img_zones.png)
 
-For each agent, we selected the corresponding data, clean and preprocessed it, and then trained three seperate models on the data - a Random Forrest, an Artificial Neural Network, and A K-Nearest-Neighbour regressor. The agent returns to the agent the output of the model that performed best on the evaluation on the test data. Once all agents have returned their predictions, the broker shows the predicted route in the web interface. See below for a diagram of this communication scheme.
+For each agent, we selected the corresponding data, cleaned and preprocessed it, and then trained three seperate models on the data - a Random Forrest, an Artificial Neural Network, and A K-Nearest-Neighbour regressor. The agent returns to the agent the output of the model that performed best on the evaluation on the test data. Once all agents have returned their predictions, the broker shows the predicted route in the web interface. See below for a diagram of this communication scheme.
 
 ![Communication between Client, Broker, and Agents](Images/readme_img_communication.png)
 
@@ -23,3 +23,8 @@ All implementations are written in *Python*. Data preprocessing and training of 
 The easiest way to try is to use the version we hosted ourselves on *Heroku*. Just visit [ais-predictor.herokuapp.com], upload a correctly sructured `.arff` file of AIS data and predict away. The servers might take a moment to wake up because Heroku puts them into sleep mode after sitting idle for 30 minutes. Note that, unfortunately, we cannot provie our original `.arff` files for copyright reasons.
 
 Alternatively, you may run the Docker images for the broker and all agents yourself. Keep in mind that you will probably need to change the agent URLs given to the broker.
+
+## The Team
+ - IAmTotallyBiased ([ChaoJJ](https://github.com/ChaoJJ))
+ - Jan Kaiser ([jank324](https://github.com/jank324))
+ - Vincent Hanke ([VincentHanke](https://github.com/VincentHanke))
